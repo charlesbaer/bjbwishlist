@@ -7,19 +7,14 @@
  *
  * GET  → { ok, purchases: { <itemId>: { date, email (masked), item } } }
  * POST (body is JSON sent as text/plain so browsers skip the CORS preflight)
- *   { action: "mark", id, date, email }   → { ok, token }   (token lets that browser undo)
+ *   { action: "mark", id, item, date, email } → { ok, token } (token lets that browser undo)
  *   { action: "undo", id, token }         → { ok }
  */
 
-// Must match the ids in index.html. Anything else is rejected, so nobody can spam the Sheet.
-var ITEMS = {
-  'beta-jacket': "Arc'teryx Beta Jacket — Men's",
-  'airpods-max-2': 'Apple AirPods Max 2 — Starlight',
-  'emblem-hoody': "Arc'teryx Emblem Fleece Full-Zip Hoody",
-  'insta360-x3': 'Insta360 X3 360° Action Camera',
-  'comfrt-sweatpants': 'Après Ski Straight Leg Sweatpants',
-  'comfrt-hoodie': 'Après Ski Hoodie'
-};
+// The gift list lives only in index.html. This script accepts any well-formed item id,
+// so adding or removing gifts never requires redeploying it.
+var ID_RE = /^[a-z0-9][a-z0-9-]{0,63}$/;
+var MAX_ROWS = 300; // guard against someone filling the Sheet with junk
 
 var SHEET_NAME = 'Purchases';
 var HEADERS = ['Item ID', 'Item', 'Date purchased', 'Email', 'Marked at', 'Undo token'];
@@ -66,8 +61,8 @@ function doGet() {
   var purchases = {};
   readRows_(getSheet_()).forEach(function (r) {
     var id = String(r.v[0]);
-    if (!ITEMS[id]) return;
-    purchases[id] = { date: formatDate_(r.v[2]), email: maskEmail_(r.v[3]), item: ITEMS[id] };
+    if (!ID_RE.test(id) || purchases[id]) return;
+    purchases[id] = { date: formatDate_(r.v[2]), email: maskEmail_(r.v[3]), item: String(r.v[1]) };
   });
   return json_({ ok: true, purchases: purchases });
 }
@@ -80,13 +75,14 @@ function doPost(e) {
     return json_({ ok: false, error: 'bad_request' });
   }
   var id = String(body.id || '');
-  if (!ITEMS[id]) return json_({ ok: false, error: 'unknown_item' });
+  if (!ID_RE.test(id)) return json_({ ok: false, error: 'bad_item' });
 
   var lock = LockService.getScriptLock();
   if (!lock.tryLock(10000)) return json_({ ok: false, error: 'busy' });
   try {
     var sheet = getSheet_();
-    var existing = readRows_(sheet).filter(function (r) { return String(r.v[0]) === id; })[0];
+    var rows = readRows_(sheet);
+    var existing = rows.filter(function (r) { return String(r.v[0]) === id; })[0];
 
     if (body.action === 'mark') {
       var date = String(body.date || '');
@@ -96,9 +92,11 @@ function doPost(e) {
         return json_({ ok: false, error: 'bad_email' });
       }
       if (existing) return json_({ ok: false, error: 'already_purchased' });
+      if (rows.length >= MAX_ROWS) return json_({ ok: false, error: 'full' });
+      var item = String(body.item || id).slice(0, 120);
       var token = Utilities.getUuid();
-      // Prefix with ' so Sheets keeps the date as typed text instead of reinterpreting it.
-      sheet.appendRow([id, ITEMS[id], "'" + date, email, new Date(), token]);
+      // Prefix with ' so Sheets keeps the text as typed instead of reinterpreting it.
+      sheet.appendRow([id, "'" + item, "'" + date, email, new Date(), token]);
       return json_({ ok: true, token: token });
     }
 

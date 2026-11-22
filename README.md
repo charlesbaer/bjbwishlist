@@ -14,7 +14,8 @@ Browser ──GET (every 30s)──▶ Apps Script web app ──▶ Google Shee
   The full email is only in your Sheet.
 - **Undo.** Only the browser that marked an item can undo it, using a token it saved when
   it marked the item. You can fix anything else by editing or deleting the row in the Sheet.
-- **Only known items.** The script rejects item ids that aren't on the list.
+- **Junk protection.** The script only accepts well-formed item ids and stops accepting new
+  rows after 300. The page ignores ids that aren't in its list.
 
 ## 1. Create the backend (about 10 minutes)
 
@@ -52,8 +53,14 @@ This repo is public, so Pages is free.
 
 ## Adding or changing gifts
 
-Add the item to `ITEMS` in **both** `index.html` and `Code.gs`, using the same `id`.
-Then redeploy the script as a new version, as described above.
+Edit the `ITEMS` list in `index.html` and nothing else. Merge to `main` and the site
+updates within a minute. The script never needs redeploying for list changes.
+
+- Each `id` must be unique and use lowercase letters, digits and dashes.
+- Don't rename an `id` after someone has marked that item purchased. The purchase is
+  stored under the id, so renaming it would make the gift look unbought.
+- `art` picks one of the drawings in `ART`: `jacket`, `airpods`, `hoody`, `camera`,
+  `pants` or `hoodie2`.
 
 ## Shutting it down in January
 
