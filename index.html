@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holiday Wish List</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800;112,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+ --bg:light-dark(#f7fafc,#0c1620);--ink:light-dark(#0f1e2c,#e9f1f7);--muted:light-dark(#536576,#9db0c0);
+ --card:light-dark(#ffffff,#132230);--line:light-dark(#dde6ee,#233646);
+ --ice:light-dark(#d6eaf7,#173149);--ice2:light-dark(#eaf4fb,#112838);
+ --red:#d92b2b;--redink:light-dark(#b81f1f,#ff6b63);--pine:light-dark(#1f4d3f,#7cc2a6);--done:light-dark(#e8f3ee,#12302a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Archivo,Inter,sans-serif;font-stretch:112%;margin:0;line-height:1.05;text-wrap:balance}
+.hero{position:relative;background:var(--ice);overflow:hidden}
+.hero svg.ridge{position:absolute;inset:auto 0 0 0;width:100%;height:62%;display:block}
+.hero .in{position:relative;max-width:1240px;margin:0 auto;padding:clamp(32px,6vw,72px) max(5vw,16px) clamp(70px,11vw,130px)}
+.tag{display:inline-flex;gap:8px;align-items:center;background:var(--red);color:#fff;font-weight:600;font-size:14px;padding:6px 12px;border-radius:999px}
+h1{font-size:clamp(40px,7vw,72px);font-weight:900;margin:16px 0 12px}
+.lede{max-width:560px;font-size:17px;color:var(--ink);opacity:.85;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px;font-size:15px}
+.stats b{font-family:Archivo,sans-serif;font-size:22px;display:block;line-height:1.1}
+.bar{max-width:1240px;margin:0 auto;padding:18px max(5vw,16px) 0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.toggle{display:flex;align-items:center;gap:10px;font-size:15px;cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--red)}
+.note{font-size:14px;color:var(--muted)}
+.grid{max-width:1240px;margin:0 auto;padding:20px max(5vw,16px) 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(15,30,44,.35);transition:transform .2s}
+.card:hover{transform:translateY(-2px)}
+.art{position:relative;aspect-ratio:16/10;background:var(--ice2);display:grid;place-items:center}
+.art svg{width:72%;height:82%}
+.store{position:absolute;top:12px;left:12px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.size{position:absolute;top:12px;right:12px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px}
+.stamp{position:absolute;inset:auto auto 14px 14px;transform:rotate(-6deg);border:3px solid var(--pine);color:var(--pine);background:var(--card);font:900 15px/1 Archivo,sans-serif;font-stretch:112%;padding:8px 12px;border-radius:8px;letter-spacing:.02em}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.body h2{font-size:21px;font-weight:800}
+.price{font-family:Archivo,sans-serif;font-weight:800;font-size:20px;white-space:nowrap;flex-shrink:0}
+.price s{font-family:Inter,sans-serif;font-weight:400;font-size:14px;color:var(--muted);margin-left:6px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.desc{margin:0;color:var(--muted);font-size:15px}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px}
+.sw{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:none;color:var(--ink);border-radius:999px;padding:6px 12px 6px 6px;font:500 14px Inter,sans-serif;cursor:pointer;min-height:36px}
+.sw i{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.sw[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.hint{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:10px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+.btn{flex:1 1 140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:12px;font:600 15px Inter,sans-serif;text-decoration:none;cursor:pointer;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:0 14px}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn:focus-visible,.sw:focus-visible,input:focus-visible{outline:3px solid #2f8de4;outline-offset:2px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.bought{background:var(--done);border-radius:12px;padding:10px 12px;font-size:14px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.link{background:none;border:0;color:var(--redink);font:600 14px Inter,sans-serif;cursor:pointer;text-decoration:underline;min-height:36px}
+dialog{border:0;border-radius:18px;padding:0;width:min(440px,calc(100vw - 32px));background:var(--card);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(8,18,28,.55)}
+form{padding:24px;display:grid;gap:14px}
+form h3{font-size:22px}
+label{display:grid;gap:6px;font-weight:600;font-size:14px}
+input[type=date],input[type=email]{font:16px Inter,sans-serif;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);min-height:46px}
+.err{color:var(--redink);font-size:14px;margin:0;min-height:1em}
+footer{text-align:center;font-size:13px;color:var(--muted);padding:0 16px 40px}
+@media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+ <svg class="ridge" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0 300V190l120-70 90 40 150-120 110 90 80-40 170 130 110-80 130 60 120-90 120 80v110z" style="fill:var(--ice2);opacity:.9"/>
+  <path d="M0 300V230l160-60 140 50 180-110 150 110 120-50 160 70 150-60 140 40v110z" fill="currentColor" style="color:var(--bg)"/>
+  <path d="M480 110l-38 31 22-4 16 14 14-16 24 6z" style="fill:var(--bg)"/>
+ </svg>
+ <div class="in">
+  <span class="tag">Ski season edition</span>
+  <h1>Holiday Wish List</h1>
+  <p class="lede">Gear for the slopes, the lodge and everything in between. Every clothing link opens on <strong>size Small</strong>, the right size.</p>
+  <div class="stats" id="stats"></div>
+ </div>
+</header>
+
+<div class="bar">
+ <label class="toggle"><input type="checkbox" id="spoil"> Show what's already been bought</label>
+ <span class="note" id="status" role="status">Connecting…</span>
+</div>
+
+<main class="grid" id="grid"></main>
+<footer>Prices were checked on Nov 22, 2026 and may change at the store.</footer>
+
+<dialog id="dlg">
+ <form id="form" method="dialog">
+  <h3 id="dlgTitle">Mark as purchased</h3>
+  <p class="desc" style="margin:0">Let everyone know this one's taken so nobody buys it twice.</p>
+  <label>Date purchased<input type="date" id="fDate" required></label>
+  <label>Your email<input type="email" id="fEmail" required placeholder="you@example.com" autocomplete="email"></label>
+  <p class="err" id="fErr"></p>
+  <div class="actions">
+   <button type="button" class="btn" id="cancel">Cancel</button>
+   <button type="submit" class="btn primary" id="save">Mark purchased</button>
+  </div>
+ </form>
+</dialog>
+
+<script>
+// ▼▼ Paste your Apps Script web app URL here (ends in /exec). See README.md. ▼▼
+const API_URL = '';
+// ▲▲ ------------------------------------------------------------------------------ ▲▲
+{
+const POLL_MS = 30000;
+const ART={
+ jacket:`<svg viewBox="0 0 200 160"><path d="M70 22l30 10 30-10 34 18 22 70-20 6-14-40v76H48V76l-14 40-20-6 22-70z" fill="#2b3a4a"/><path d="M100 32v112" stroke="#9fb3c4" stroke-width="3"/><path d="M80 18c6 10 34 10 40 0l-4-8H84z" fill="#3a4c5e"/><path d="M60 70h22M118 70h22" stroke="#9fb3c4" stroke-width="3" stroke-linecap="round"/><circle cx="138" cy="44" r="5" fill="#d92b2b"/></svg>`,
+ airpods:`<svg viewBox="0 0 200 160"><path d="M46 92V70a54 54 0 01108 0v22" fill="none" stroke="#e7dccb" stroke-width="12" stroke-linecap="round"/><path d="M54 66a46 46 0 0192 0" fill="none" stroke="#c9bba5" stroke-width="3"/><rect x="26" y="84" width="40" height="58" rx="18" fill="#efe6d6"/><rect x="134" y="84" width="40" height="58" rx="18" fill="#efe6d6"/><rect x="58" y="92" width="12" height="42" rx="6" fill="#d2c4ad"/><rect x="130" y="92" width="12" height="42" rx="6" fill="#d2c4ad"/></svg>`,
+ hoody:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#1b2026"/><path d="M78 30c0 22 44 22 44 0" fill="#2a3139"/><path d="M100 46v100" stroke="#7d8894" stroke-width="3"/><path d="M66 112h26M108 112h26" stroke="#3a434d" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="72" r="6" fill="#7d8894"/></svg>`,
+ camera:`<svg viewBox="0 0 200 160"><rect x="76" y="20" width="48" height="122" rx="14" fill="#1d1f22"/><circle cx="100" cy="52" r="20" fill="#3b4148"/><circle cx="100" cy="52" r="12" fill="#5f88b6"/><circle cx="95" cy="47" r="4" fill="#cfe3f5"/><rect x="86" y="84" width="28" height="34" rx="5" fill="#3a4a5c"/><rect x="92" y="126" width="16" height="6" rx="3" fill="#d92b2b"/></svg>`,
+ pants:`<svg viewBox="0 0 200 160"><path d="M62 16h76l6 128h-30l-14-92-14 92H56z" fill="#22344d"/><path d="M62 16h76v14H62z" fill="#31476a"/><path d="M96 22l-4 14M104 22l4 14" stroke="#fff" stroke-width="2"/><path d="M70 70l8 6M126 64l-6 8M74 110l7 4M124 104l-7 6" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`,
+ hoodie2:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#2c4466"/><path d="M78 30c0 22 44 22 44 0" fill="#3b5780"/><path d="M92 50v18M108 50v18" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/><path d="M70 104h60v24H70z" fill="#3b5780" rx="6"/><path d="M84 88l8 6M116 84l-6 8" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`
+};
+// Item ids must match ITEMS in apps-script/Code.gs.
+const ITEMS=[
+ {id:'beta-jacket',art:'jacket',store:'REI',size:'Size S',name:"Arc'teryx Beta Jacket — Men's",price:400,
+  desc:'Waterproof Gore-Tex shell that layers over anything. The one jacket for every storm day.',
+  url:'https://www.rei.com/product/228617/arcteryx-beta-jacket-mens',
+  hint:'REI doesn’t accept a size in its links — pick S on the page.',colorsNote:'Colors: Black, Mongoose, Sea Salt, Vitality'},
+ {id:'airpods-max-2',art:'airpods',store:'Amazon',name:'Apple AirPods Max 2 — Starlight',price:null,retail:549,
+  desc:'Over-ear noise cancelling with the H2 chip. Perfect for the long drive to the mountain.',
+  url:'https://www.amazon.com/dp/B0H829HV4Z',hint:'Price varies on Amazon. New retail is $549.'},
+ {id:'emblem-hoody',art:'hoody',store:'Amazon',size:'Size S',name:"Arc'teryx Emblem Fleece Full-Zip Hoody",price:160,
+  desc:'Heavyweight cotton-blend fleece. The après-ski, everyday, always-on hoodie.',
+  url:'https://www.amazon.com/dp/B0DM3Q387P',hint:'Amazon’s size picker can’t be preset by link — choose Small at checkout.'},
+ {id:'insta360-x3',art:'camera',store:'Best Buy',name:'Insta360 X3 360° Action Camera',price:299.99,
+  desc:'5.7K 360° video, FlowState stabilization and waterproof to 33 ft. Built for filming runs.',
+  url:'https://www.bestbuy.com/product/insta360-x3-5-7k-360-degree-action-camera-black/J39VLTZQVT'},
+ {id:'comfrt-sweatpants',art:'pants',store:'Comfrt',size:'Size S',name:'Après Ski Straight Leg Sweatpants',price:35,was:70,
+  desc:'Soft straight-leg sweats with a ski-slope print. Lodge mode, activated.',
+  base:'https://comfrt.com/products/apres-ski-straight-leg-sweatpants',
+  colors:[['Ski Slopes','#cfe0ef','46422504177708'],['Naval Academy','#22344d','46658306441260'],['Petal Pink','#f2c9cf','46658306670636']]},
+ {id:'comfrt-hoodie',art:'hoodie2',store:'Comfrt',size:'Size S',name:'Après Ski Hoodie',price:39,was:130,
+  desc:'Oversized, cloud-soft hoodie to match the sweatpants.',
+  base:'https://comfrt.com/products/apres-ski-hoodie',
+  colors:[['Ski Slopes','#cfe0ef','46422594256940'],['Naval Academy','#22344d','46658281701420'],['Petal','#f2c9cf','46422561259564']]}
+];
+const pick={};ITEMS.forEach(i=>{if(i.colors)pick[i.id]=0});
+let bought={},spoil=false,online=false,current=null,busy=false;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+(Number.isInteger(n)?n:n.toFixed(2));
+const fmtDate=d=>{const t=new Date(d+'T12:00:00');return isNaN(t)?esc(d):t.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})};
+const link=i=>i.colors?`${i.base}?variant=${i.colors[pick[i.id]][2]}`:i.url;
+const store={get(k){try{return localStorage.getItem(k)}catch(_){return null}},set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(_){}}};
+// Undo tokens are kept per browser: only the device that marked an item can undo it.
+const tokens=(()=>{try{return JSON.parse(store.get('wl-tokens')||'{}')||{}}catch(_){return{}}})();
+const saveTokens=()=>store.set('wl-tokens',JSON.stringify(tokens));
+spoil=store.get('wl-spoil')==='1';
+$('#spoil').checked=spoil;
+
+function render(){
+ const total=ITEMS.reduce((s,i)=>s+(i.price??i.retail??0),0);
+ const nb=ITEMS.filter(i=>bought[i.id]).length;
+ $('#stats').innerHTML=`<span><b>${ITEMS.length}</b>gifts</span><span><b>about ${money(Math.round(total))}</b>total</span>`+(spoil?`<span><b>${nb} of ${ITEMS.length}</b>bought</span>`:'');
+ $('#grid').innerHTML=ITEMS.map(i=>{
+  const b=spoil&&bought[i.id];
+  const price=i.price!=null?`${money(i.price)}${i.was?`<s>${money(i.was)}</s>`:''}`:`<span style="font-size:15px">Price varies</span>`;
+  const sw=i.colors?`<div class="swatches"><span>Color:</span>${i.colors.map((c,k)=>`<button class="sw" data-sw="${i.id}" data-k="${k}" aria-pressed="${pick[i.id]===k}"><i style="background:${c[1]}"></i>${c[0]}</button>`).join('')}</div>`:(i.colorsNote?`<div class="hint">${i.colorsNote}</div>`:'');
+  const status=b?`<div class="bought"><span>✓ Bought ${fmtDate(b.date)} by ${esc(b.email)}</span>${tokens[i.id]&&online?`<button class="link" data-undo="${i.id}">Undo</button>`:''}</div>`:'';
+  return `<article class="card"><div class="art"><span class="store">${i.store}</span>${i.size?`<span class="size">${i.size}</span>`:''}${ART[i.art]}${b?'<span class="stamp">PURCHASED</span>':''}</div>
+  <div class="body"><div class="row"><h2>${i.name}</h2><span class="price">${price}</span></div>
+  <p class="desc">${i.desc}</p>${sw}${i.hint?`<div class="hint">${i.hint}</div>`:''}${status}
+  <div class="actions"><a class="btn" href="${link(i)}" target="_blank" rel="noopener">View at ${i.store} ↗</a>
+  ${b?'':`<button class="btn primary" data-mark="${i.id}" ${online?'':'disabled'}>Mark purchased</button>`}</div></div></article>`}).join('');
+}
+
+async function api(body){
+ const opts=body?{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}:{};
+ const url=body?API_URL:API_URL+(API_URL.includes('?')?'&':'?')+'t='+Date.now();
+ const res=await fetch(url,{...opts,redirect:'follow'});
+ if(!res.ok)throw new Error('http_'+res.status);
+ return res.json();
+}
+
+async function load(){
+ if(busy)return;
+ try{
+  const r=await api();
+  if(!r.ok)throw new Error(r.error||'error');
+  bought=r.purchases||{};
+  // Forget undo tokens for items that are no longer marked (e.g. owner cleared the row).
+  let changed=false;for(const id in tokens)if(!bought[id]){delete tokens[id];changed=true}
+  if(changed)saveTokens();
+  online=true;$('#status').textContent='Up to date — purchases refresh every 30 seconds.';
+ }catch(_){
+  online=false;$('#status').textContent='Purchase status can’t be reached right now. Try again in a minute.';
+ }
+ render();
+}
+
+$('#spoil').addEventListener('change',e=>{spoil=e.target.checked;store.set('wl-spoil',spoil?'1':'0');render()});
+$('#grid').addEventListener('click',async e=>{
+ const s=e.target.closest('[data-sw]');if(s){pick[s.dataset.sw]=+s.dataset.k;render();return}
+ const m=e.target.closest('[data-mark]');if(m){openDlg(m.dataset.mark);return}
+ const u=e.target.closest('[data-undo]');
+ if(u){
+  const id=u.dataset.undo;u.disabled=true;busy=true;
+  try{
+   const r=await api({action:'undo',id,token:tokens[id]});
+   if(!r.ok)throw new Error(r.error);
+   delete bought[id];delete tokens[id];saveTokens();
+  }catch(_){$('#status').textContent='Couldn’t undo — try again.'}
+  finally{busy=false;render()}
+ }
+});
+function openDlg(id){
+ current=ITEMS.find(i=>i.id===id);
+ $('#dlgTitle').textContent='Mark purchased: '+current.name;
+ $('#fDate').value=new Date().toLocaleDateString('en-CA');$('#fErr').textContent='';
+ $('#fEmail').value=store.get('wl-email')||'';
+ $('#dlg').showModal();
+}
+$('#cancel').addEventListener('click',()=>$('#dlg').close());
+$('#form').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const date=$('#fDate').value,email=$('#fEmail').value.trim();
+ if(!date||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('#fErr').textContent='Add a date and a valid email.';return}
+ $('#save').disabled=true;busy=true;
+ try{
+  const r=await api({action:'mark',id:current.id,date,email});
+  if(!r.ok){
+   if(r.error==='already_purchased'){
+    $('#fErr').textContent='Someone already marked this one as bought. Please pick another gift!';
+    busy=false;await load();return;
+   }
+   $('#fErr').textContent=r.error==='busy'?'Lots of activity right now — please try again.':'Couldn’t save — please check the date and email.';
+   return;
+  }
+  tokens[current.id]=r.token;saveTokens();store.set('wl-email',email);
+  const [a,b]=email.split('@');
+  bought[current.id]={date,email:a.slice(0,2)+'•••@'+b,item:current.name};
+  $('#dlg').close();
+  if(!spoil){spoil=true;$('#spoil').checked=true;store.set('wl-spoil','1')}
+  render();
+ }catch(_){
+  $('#fErr').textContent='Couldn’t save — please try again.';
+ }finally{$('#save').disabled=false;busy=false}
+});
+
+render();
+if(!API_URL){
+ $('#status').textContent='Purchase tracking isn’t set up yet (API_URL is empty).';
+}else{
+ load();
+ setInterval(()=>{if(!document.hidden)load()},POLL_MS);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+}
+}
+</script>
+</body>
+</html>
