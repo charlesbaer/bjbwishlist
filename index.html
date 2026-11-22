@@ -117,7 +117,8 @@ const ART={
  pants:`<svg viewBox="0 0 200 160"><path d="M62 16h76l6 128h-30l-14-92-14 92H56z" fill="#22344d"/><path d="M62 16h76v14H62z" fill="#31476a"/><path d="M96 22l-4 14M104 22l4 14" stroke="#fff" stroke-width="2"/><path d="M70 70l8 6M126 64l-6 8M74 110l7 4M124 104l-7 6" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`,
  hoodie2:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#2c4466"/><path d="M78 30c0 22 44 22 44 0" fill="#3b5780"/><path d="M92 50v18M108 50v18" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/><path d="M70 104h60v24H70z" fill="#3b5780" rx="6"/><path d="M84 88l8 6M116 84l-6 8" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`
 };
-// Item ids must match ITEMS in apps-script/Code.gs.
+// The one and only gift list. Each id must be unique, lowercase letters/digits/dashes, and
+// must not change once someone has marked the item purchased.
 const ITEMS=[
  {id:'beta-jacket',art:'jacket',store:'REI',size:'Size S',name:"Arc'teryx Beta Jacket — Men's",price:400,
   desc:'Waterproof Gore-Tex shell that layers over anything. The one jacket for every storm day.',
@@ -224,7 +225,7 @@ $('#form').addEventListener('submit',async e=>{
  if(!date||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('#fErr').textContent='Add a date and a valid email.';return}
  $('#save').disabled=true;busy=true;
  try{
-  const r=await api({action:'mark',id:current.id,date,email});
+  const r=await api({action:'mark',id:current.id,item:current.name,date,email});
   if(!r.ok){
    if(r.error==='already_purchased'){
     $('#fErr').textContent='Someone already marked this one as bought. Please pick another gift!';
