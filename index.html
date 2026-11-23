@@ -115,6 +115,7 @@ const ART={
  hoody:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#1b2026"/><path d="M78 30c0 22 44 22 44 0" fill="#2a3139"/><path d="M100 46v100" stroke="#7d8894" stroke-width="3"/><path d="M66 112h26M108 112h26" stroke="#3a434d" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="72" r="6" fill="#7d8894"/></svg>`,
  camera:`<svg viewBox="0 0 200 160"><rect x="76" y="20" width="48" height="122" rx="14" fill="#1d1f22"/><circle cx="100" cy="52" r="20" fill="#3b4148"/><circle cx="100" cy="52" r="12" fill="#5f88b6"/><circle cx="95" cy="47" r="4" fill="#cfe3f5"/><rect x="86" y="84" width="28" height="34" rx="5" fill="#3a4a5c"/><rect x="92" y="126" width="16" height="6" rx="3" fill="#d92b2b"/></svg>`,
  pants:`<svg viewBox="0 0 200 160"><path d="M62 16h76l6 128h-30l-14-92-14 92H56z" fill="#22344d"/><path d="M62 16h76v14H62z" fill="#31476a"/><path d="M96 22l-4 14M104 22l4 14" stroke="#fff" stroke-width="2"/><path d="M70 70l8 6M126 64l-6 8M74 110l7 4M124 104l-7 6" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`,
+ blanket:`<svg viewBox="0 0 200 160"><path d="M60 40c20-14 60-14 80 0" fill="none" stroke="#f29c52" stroke-width="4" stroke-linecap="round" opacity=".55"/><path d="M70 26c15-9 45-9 60 0" fill="none" stroke="#f29c52" stroke-width="4" stroke-linecap="round" opacity=".35"/><rect x="30" y="58" width="140" height="70" rx="16" fill="#8fbfb4"/><path d="M30 84h140M30 104h140" stroke="#6fa79a" stroke-width="3"/><rect x="30" y="58" width="140" height="18" rx="9" fill="#a7cfc5"/><path d="M58 64v58M86 64v58M114 64v58M142 64v58" stroke="#7fb3a7" stroke-width="2" stroke-dasharray="4 5"/><path d="M170 112c14 0 14 22 2 26" fill="none" stroke="#2b3a4a" stroke-width="3"/><rect x="164" y="134" width="16" height="10" rx="3" fill="#2b3a4a"/><circle cx="156" cy="118" r="5" fill="#d92b2b"/></svg>`,
  hoodie2:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#2c4466"/><path d="M78 30c0 22 44 22 44 0" fill="#3b5780"/><path d="M92 50v18M108 50v18" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/><path d="M70 104h60v24H70z" fill="#3b5780" rx="6"/><path d="M84 88l8 6M116 84l-6 8" stroke="#e9eef5" stroke-width="3" stroke-linecap="round"/></svg>`
 };
 // The one and only gift list. Each id must be unique, lowercase letters/digits/dashes, and
@@ -140,7 +141,11 @@ const ITEMS=[
  {id:'comfrt-hoodie',art:'hoodie2',store:'Comfrt',size:'Size S',name:'Après Ski Hoodie',price:39,was:130,
   desc:'Oversized, cloud-soft hoodie to match the sweatpants.',
   base:'https://comfrt.com/products/apres-ski-hoodie',
-  colors:[['Ski Slopes','#cfe0ef','46422594256940'],['Naval Academy','#22344d','46658281701420'],['Petal','#f2c9cf','46422561259564']]}
+  colors:[['Ski Slopes','#cfe0ef','46422594256940'],['Naval Academy','#22344d','46658281701420'],['Petal','#f2c9cf','46422561259564']]},
+ {id:'comfrt-ember-blanket',art:'blanket',store:'Comfrt',name:'Ember Heated Blanket',price:null,
+  desc:'Cloud-soft heated throw for cold nights at the lodge.',
+  url:'https://comfrt.com/products/ember-heated-blanket?variant=46371993911340',
+  hint:'The link opens on the chosen color. Price varies on Comfrt.'}
 ];
 const pick={};ITEMS.forEach(i=>{if(i.colors)pick[i.id]=0});
 let bought={},spoil=false,online=false,current=null,busy=false;
