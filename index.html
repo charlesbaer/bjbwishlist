@@ -110,7 +110,6 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwgRU-Hcj4U3UV3BP7F3wIm
 {
 const POLL_MS = 30000;
 const ART={
- jacket:`<svg viewBox="0 0 200 160"><path d="M70 22l30 10 30-10 34 18 22 70-20 6-14-40v76H48V76l-14 40-20-6 22-70z" fill="#2b3a4a"/><path d="M100 32v112" stroke="#9fb3c4" stroke-width="3"/><path d="M80 18c6 10 34 10 40 0l-4-8H84z" fill="#3a4c5e"/><path d="M60 70h22M118 70h22" stroke="#9fb3c4" stroke-width="3" stroke-linecap="round"/><circle cx="138" cy="44" r="5" fill="#d92b2b"/></svg>`,
  airpods:`<svg viewBox="0 0 200 160"><path d="M46 92V70a54 54 0 01108 0v22" fill="none" stroke="#e7dccb" stroke-width="12" stroke-linecap="round"/><path d="M54 66a46 46 0 0192 0" fill="none" stroke="#c9bba5" stroke-width="3"/><rect x="26" y="84" width="40" height="58" rx="18" fill="#efe6d6"/><rect x="134" y="84" width="40" height="58" rx="18" fill="#efe6d6"/><rect x="58" y="92" width="12" height="42" rx="6" fill="#d2c4ad"/><rect x="130" y="92" width="12" height="42" rx="6" fill="#d2c4ad"/></svg>`,
  hoody:`<svg viewBox="0 0 200 160"><path d="M72 30c4-16 52-16 56 0l38 16 18 64-20 6-14-36v70H50V80l-14 36-20-6 18-64z" fill="#1b2026"/><path d="M78 30c0 22 44 22 44 0" fill="#2a3139"/><path d="M100 46v100" stroke="#7d8894" stroke-width="3"/><path d="M66 112h26M108 112h26" stroke="#3a434d" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="72" r="6" fill="#7d8894"/></svg>`,
  camera:`<svg viewBox="0 0 200 160"><rect x="76" y="20" width="48" height="122" rx="14" fill="#1d1f22"/><circle cx="100" cy="52" r="20" fill="#3b4148"/><circle cx="100" cy="52" r="12" fill="#5f88b6"/><circle cx="95" cy="47" r="4" fill="#cfe3f5"/><rect x="86" y="84" width="28" height="34" rx="5" fill="#3a4a5c"/><rect x="92" y="126" width="16" height="6" rx="3" fill="#d92b2b"/></svg>`,
@@ -122,10 +121,6 @@ const ART={
 // The one and only gift list. Each id must be unique, lowercase letters/digits/dashes, and
 // must not change once someone has marked the item purchased.
 const ITEMS=[
- {id:'beta-jacket',art:'jacket',store:'REI',size:'Size S',name:"Arc'teryx Beta Jacket — Men's",price:400,
-  desc:'Waterproof Gore-Tex shell that layers over anything. The one jacket for every storm day.',
-  url:'https://www.rei.com/product/228617/arcteryx-beta-jacket-mens',
-  hint:'REI doesn’t accept a size in its links — pick S on the page.',colorsNote:'Colors: Black, Mongoose, Sea Salt, Vitality'},
  {id:'airpods-max-2',art:'airpods',store:'Amazon',name:'Apple AirPods Max 2 — Starlight',price:null,retail:549,
   desc:'Over-ear noise cancelling with the H2 chip. Perfect for the long drive to the mountain.',
   url:'https://www.amazon.com/dp/B0H829HV4Z',hint:'Price varies on Amazon. New retail is $549.'},

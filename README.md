@@ -59,7 +59,7 @@ updates within a minute. The script never needs redeploying for list changes.
 - Each `id` must be unique and use lowercase letters, digits and dashes.
 - Don't rename an `id` after someone has marked that item purchased. The purchase is
   stored under the id, so renaming it would make the gift look unbought.
-- `art` picks one of the drawings in `ART`: `jacket`, `airpods`, `hoody`, `camera`,
+- `art` picks one of the drawings in `ART`: `airpods`, `hoody`, `camera`, `blanket`, `insoles`,
   `pants` or `hoodie2`.
 
 ## Shutting it down in January
